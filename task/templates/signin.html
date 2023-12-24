@@ -1,13 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>signin</h1>
+<main class="container">
+<div class="row">
+<section class="flex-column py-5">
+    <form action="/signin/" method="POST" class="card card-body">
+        {% csrf_token %}
+        <h1 class="text-center">INICIA SESION</h1>
+        {{error}}
+                {%csrf_token%}
+                {{error}}
+                <div class="mb->
+                    <label for="username" id="username">Nombre de Usuario:</label>
+                    <input type="text" name="username" class="form-control" placeholder="Escribe tu nombre de usuario">
+                </div>
+                <div class="mb-3">
+                    <label for="password" id="password">Contrasenha:</label>
+                    <input type="password" name="password" class="form-control" placeholder="Escribe tu Contrasenha">
+                </div>
+    <button class="btn btn-dark">
+        Iniciar seccion
+    </button>
+    </form>
 
-{{error}}
-<form action="/signin/" method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-<button>
-    Iniciar seccion
-</button>
-</form>
+</section>
+</div>
+</main>
 {% endblock %}

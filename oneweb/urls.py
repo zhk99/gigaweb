@@ -23,12 +23,16 @@ urlpatterns = [
     path('',views.home, name='home'),
     path('signup/',views.signup, name='signup'),
     path('task/',views.task, name='task'),
+    path('tasks_completed/',views.tasks_completed, name='tasks_completed'),
     path('tasks/',views.task, name='tasks'),
-    path('task/<int:task_id>',views.task_detail, name='task_detail'),
-    path('task/<int:task_id>/complete',views.complete_task, name='complete_task'),
+    path('task/<int:task_id>', views.task_detail, name='task_detail'),
+    path('task/<int:task_id>/complete', views.complete_task, name='complete_task'),
+    path('task/<int:task_id>/delete', views.borrar_task, name='borrar_task'),
     path('logout/',views.signout, name='logout'),
     path('signin/',views.signin, name='signin'),
     path('task/create/',views.create_task, name='create_task'),
+    #path('list_user/',views.list_user, name='list_user'),
+
 
 ]
 

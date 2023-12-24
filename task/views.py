@@ -7,6 +7,7 @@ from django.db import IntegrityError
 from .form import taskForm
 from .models import Task
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'home.html')
@@ -38,12 +39,20 @@ def signup(request):
                 'error': 'Las contraseñas no coinciden'
             })
 
-
+@login_required
 def task(request):
     tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True)
 
     return render(request, 'task.html',{'tasks': tasks})
 
+
+@login_required
+def tasks_completed(request):
+    tasks = Task.objects.filter(user=request.user, datecompleted__isnull= False).order_by
+    ('-datecompleted')
+    return render(request, 'task.html',{'tasks': tasks})
+
+@login_required
 def create_task(request):
         if request.method=='GET':
             return render(request, 'create_task.html',{
@@ -61,7 +70,7 @@ def create_task(request):
                     'form' : taskForm,
                     'error': 'Pruebe valores validos'
                     })
-
+@login_required
 def task_detail(request, task_id):
     if request.method == 'GET':
         task = get_object_or_404(Task, pk=task_id, user=request.user    )
@@ -76,12 +85,19 @@ def task_detail(request, task_id):
         except ValueError:
             return render(request,'task_detail.html', {'task':task, 'form':form, 
                                                        'error': "ERROR AL ACTUALIZAR LA TAREA"})
-
+@login_required
 def complete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == 'POST':
-        task.datecomplete = timezone.now()
+        task.datecompleted = timezone.now()
         task.save()
+        return redirect('tasks')
+@login_required
+def borrar_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
+        print("tarea eleminidad {task_id}")
         return redirect('tasks')
 
 
@@ -106,4 +122,3 @@ def signin(request):
         else:
             login(request, user)
             return redirect('task')
-            
