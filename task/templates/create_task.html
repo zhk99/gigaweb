@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
 
 <main class="container">
     <div class="row">
-        <div class="col-md-4 offset-4">
+        <div>
             
     <form action="/task/create/" method="POST" class="card card-body">
-    <h1>CREAR TAREA</h1>
+    <h1 class="text-center ">CREAR TAREA</h1>
             {{error}}
             {% csrf_token %}
             {{form}}
-            <h1 class="text-center"> <button class="btn btn-dark">
-                guardar
+            <h1 class="text-center"> 
+                <button class="btn btn-dark">
+                <img src="{% static 'source/icons/guardar.png' %}"" alt="">
             </button>
         </h1>
    
